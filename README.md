@@ -39,6 +39,7 @@ The experimental data must be CSVs with 4 columns, each measuring clock times fo
 See more in the section 3.2 Experimental Design of the article.
 
 Finally according to the architecture used and signature scheme, your file layout must comply to the `data/input/[protocol]/[arch]/[scheme].csv` layout as follows:
+
 ![PQTLS experiments layout](./assets/img/experiments.png)
 
 Then you can prepare your dataset from individual experiments:
@@ -55,7 +56,7 @@ And finally reproduce the research models:
 ```
 make models
 ```
-[![asciicast](https://asciinema.org/a/hjEvTnDsgXQ6QatSsiNuwRysX.svg)](https://asciinema.org/a/hjEvTnDsgXQ6QatSsiNuwRysX)
+[![asciicast](https://asciinema.org/a/mX9hHKYP8YEL571L78unNxuTr.svg)](https://asciinema.org/a/mX9hHKYP8YEL571L78unNxuTr)
 
 Your outputs will be in the `data/output` directory.
 
