@@ -54,6 +54,8 @@ And finally reproduce the research models:
 ```
 make models
 ```
+[![asciicast](https://asciinema.org/a/hjEvTnDsgXQ6QatSsiNuwRysX.svg)](https://asciinema.org/a/hjEvTnDsgXQ6QatSsiNuwRysX)
+
 Your outputs will be in the `data/output` directory.
 
 ## Acknowledgments
