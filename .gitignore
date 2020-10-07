@@ -16,6 +16,12 @@ data/output/*
 
 vignettes/figure/*
 vignettes/img/*
+vignettes/*.log
+vignettes/*.tex
+vignettes/*.Rnw
+
+
+
 
 # Created by https://www.gitignore.io/api/r,osx,code,linux,macos,python,windows,jetbrains+all
 # Edit at https://www.gitignore.io/?templates=r,osx,code,linux,macos,python,windows,jetbrains+all

@@ -1,0 +1,7 @@
+^renv$
+^renv\.lock$
+^packrat/
+^\.Rprofile$
+^cran-comments\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
