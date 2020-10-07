@@ -90,7 +90,7 @@ fit_hermite <- function(data) {
 dat_survdiff <- survdiff(Surv(total, status) ~ protocol, data = dat, rho = 1)  
 
 dat_survfit <- survfit(Surv(total, status) ~ protocol, data = dat) 
-pdf("./data/output/pqtls_survfit.pdf", 800, 400, 24)
+#pdf("./data/output/pqtls_survfit.pdf", 800, 400, 24)
 p <- dat_survfit %>% ggsurvplot(data = dat,
     conf.int = TRUE,
     risk.table = TRUE,
@@ -134,7 +134,7 @@ p$table %>% ggsave(
   pointsize=14,
   dpi=1200,
 )
-dev.off()
+#dev.off()
 
 #png("./data/output/pqtls_cumhaz.png", 800, 400, units = "px", 24)
 p <-dat_survfit %>% ggsurvplot(data = dat, 
@@ -178,7 +178,6 @@ p$table %>% ggsave(
   pointsize=14,
   dpi=1200,
 )
-dev.off()
 
 p <- NULL
 
@@ -186,8 +185,7 @@ p <- NULL
 #srv <- survreg(Surv(total, status) ~ protocol*arch*scheme, data = dat, dist = "weibull")
 
 dat_survreg <- flexsurvreg(Surv(total, status) ~ protocol, data = dat, dist = "weibull")
-png("./data/output/pqtls_survreg.png", 400, 450, units = "px", 12)
-dat_survreg %>% ggflexsurvplot(data = dat, 
+p <- dat_survreg %>% ggflexsurvplot(data = dat, 
   fun = "survival",
   conf.int = TRUE,
   conf.int.km = TRUE,
@@ -207,7 +205,25 @@ dat_survreg %>% ggflexsurvplot(data = dat,
   #palette = c("gray", "#E7B800", "#2E9FDF"),
   ggtheme = ggthemes::theme_tufte(base_size = 12),
   tables.theme = ggthemes::theme_tufte(base_size = 12))
-dev.off()
+p$plot %>% ggsave(
+  filename = "./data/output/pqtls_survreg_plot.pdf",
+  plot = .,
+  width=600,
+  height=300,
+  units="mm",
+  scale=1/4,
+  dpi=1200,
+)
+p$table %>% ggsave(
+  filename = "./data/output/pqtls_survreg_table.pdf",
+  plot = .,
+  width=600,
+  height=100,
+  units="mm",
+  scale=1/3,
+  pointsize=14,
+  dpi=1200,
+)
 
 
 
@@ -233,8 +249,7 @@ sink("./data/output/pqtls_model.txt")
 dat_model %>% stargazer(model.names = TRUE) 
 sink()
 
-png("./data/output/pqtls_model.png", 400, 450, units = "px", 12)
-dat_model %>% sjPlot::plot_model( 
+p <- dat_model %>% sjPlot::plot_model( 
   axis.title = "CPU clock cycles",
   colors = c("#6D9EC1", "#5da68a"), 
   show.values = TRUE,
@@ -245,16 +260,32 @@ dat_model %>% sjPlot::plot_model(
   vline.color = "gray",
   width = 0.5#1.5
 ) + ggthemes::theme_tufte(base_size = 12)
-dev.off()
+p %>% ggsave(
+  filename = "./data/output/pqtls_model.pdf",
+  plot = .,
+  width=400,
+  height=450,
+  units="mm",
+  scale=1/4,
+  dpi=1200,
+)
 
-png("./data/output/pqtls_residuals.png", 400, 450, units = "px", 12)
-dat_model %>% ggnostic(
+#png("./data/output/pqtls_residuals.png", 400, 450, units = "px", 12)
+p <- dat_model %>% ggnostic(
     mapping = ggplot2::aes(color = scheme),
     columnsY = c("total", ".fitted", ".se.fit", ".resid", ".std.resid", ".hat", ".sigma", ".cooksd"),
     continuous = list(default = ggally_smooth, .fitted = ggally_smooth), 
-  ) 
+  )
+p %>% ggsave(
+  filename = "./data/output/pqtls_residuals.pdf",
+  plot = .,
+  width=400,
+  height=450,
+  units="mm",
+  scale=1/4,
+  dpi=1200,
+)
 #p + ggthemes::theme_tufte(base_size = 36) + scale_fill_manual()
-dev.off()
 
 ############
 # ANOVA
@@ -278,8 +309,8 @@ sink("./data/output/pqtls_anova.txt")
 sink()
 
 
-png("./data/output/pqtls_arm_anova.png", 400, 475, units = "px", 36)
-dat %>% filter(arch == "arm") %>% 
+#png("./data/output/pqtls_arm_anova.png", 400, 475, units = "px", 36)
+p <- dat %>% filter(arch == "arm") %>% 
   ggboxplot(
     x = "protocol",
     y = "total",
@@ -329,10 +360,19 @@ dat %>% filter(arch == "arm") %>%
     #ref.group = "no",
     label.y = 2.3e+7
   )
-dev.off()
+p %>% ggsave(
+  filename = "./data/output/pqtls_arm_anova.pdf",
+  plot = .,
+  width=400,
+  height=475,
+  units="mm",
+  scale=1/4,
+  pointsize=36,
+  dpi=1200,
+)
 
-png("./data/output/pqtls_x86_anova.png", 400, 475, units = "px", 36)
-dat %>% filter(arch == "x86") %>% 
+# png("./data/output/pqtls_x86_anova.png", 400, 475, units = "px", 36)
+p <- dat %>% filter(arch == "x86") %>% 
   ggboxplot(
     x = "protocol",
     y = "total",
@@ -382,5 +422,15 @@ dat %>% filter(arch == "x86") %>%
     #ref.group = "no",
     label.y = 2.0e+10
   )
-dev.off()
+
+p %>% ggsave(
+  filename = "./data/output/pqtls_x86_anova.pdf",
+  plot = .,
+  width=400,
+  height=475,
+  units="mm",
+  scale=1/4,
+  pointsize=36,
+  dpi=1200,
+)
 

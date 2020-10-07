@@ -40,7 +40,7 @@ ggcorrplot(
   scale=1/4,
   dpi=600,
 )
-dev.off()
+#dev.off()
 
 
 #pdf("./data/output/pqtls_pairs.pdf", width = 400, height = 400, pointsize = 12)
@@ -85,7 +85,7 @@ dev.off()
   scale=1/3,
   dpi=1200,
 )
-dev.off()
+#dev.off()
 # dat %>% select(
 #     protocol,
 #     scheme,
