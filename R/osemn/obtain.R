@@ -3,26 +3,26 @@ library(tidyverse)
 files <- list(
   pq = list(
     x86 = list(
-      no = "./data/input/new/pq/x86/No-Dilitium-r2",
-      single = "./data/input/new/pq/x86/Single-Dilitium-r2",
-      double = "./data/input/new/pq/x86/Double-Dilitium-r2"  
+      no = "./data/input/pq/x86/no.csv",
+      single = "./data/input/pq/x86/single.csv",
+      double = "./data/input/pq/x86/double.csv"  
     ),
     arm = list(
-      no = "./data/input/new/pq/arm/No-Dilitium",
-      single = "./data/input/new/pq/arm/Single-Dilitium",
-      double = "./data/input/new/pq/arm/Double-Dilitium"
+      no = "./data/input/pq/arm/no.csv",
+      single = "./data/input/pq/arm/single.csv",
+      double = "./data/input/pq/arm/double.csv"
     )
   ),
   classic = list(
     x86 = list(
-      no = "./data/input/new/classic/x86/Classic-No-Sign.csv",
-      single = "./data/input/new/classic/x86/Classic-Single-Sign.csv",
-      double = "./data/input/new/classic/x86/Classic-Double-Sign.csv"  
+      no = "./data/input/classic/x86/no.csv",
+      single = "./data/input/classic/x86/single.csv",
+      double = "./data/input/classic/x86/double.csv"  
     ),
     arm = list(
-      no = "./data/input/new/classic/arm/Classic-No-Sign-Raspberry.csv",
-      single = "./data/input/new/classic/arm/Classic-Single-Sign-Raspberry.csv",
-      double = "./data/input/new/classic/arm/Classic-Double-Sign-Raspberry.csv"
+      no = "./data/input/classic/arm/no.csv",
+      single = "./data/input/classic/arm/single.csv",
+      double = "./data/input/classic/arm/double.csv"
     )
   )
 )
@@ -69,7 +69,8 @@ dat <- dat %>% left_join(dat_summarised) %>%
 
 # Wilcox test for train-test homogeneity
 # 0.9724
-(wilcox.test(total ~ -1 + label, data = dat))
+test <- wilcox.test(total ~ -1 + label, data = dat)
 
+if (test$p.value < 0.05) stop("Train-test is not homogeneous")
 
 dat %>% write_csv("./data/output/pqtls.csv")
