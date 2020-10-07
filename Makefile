@@ -15,6 +15,7 @@ R_INTERPRETER = /usr/bin/env Rscript
 ## Installs R Dependencies
 dependencies: test_environment
 	$(R_INTERPRETER) -e 'renv::restore()'
+	$(R_INTERPRETER) -e 'if (tinytex::tinytex_root() == "") tinytex::install_prebuilt()'
 
 ## Prepares dataset from individual experiments
 0 data: dependencies
@@ -26,8 +27,8 @@ dependencies: test_environment
 1 eda: data
 	@echo ">>> Exploring data for models..."
 	$(R_INTERPRETER) R/osemn/explore.R
-	@echo ">>> Exploring data by individual dataset..."
-	$(R_INTERPRETER) R/eda.R
+	#@echo ">>> Exploring data by individual dataset..."
+	#$(R_INTERPRETER) R/eda.R
 	@echo ">>> Done! See results at $(PROJECT_DIR)/data/output and $(PROJECT_DIR)/vignettes"
 
 ## Reproduces research modelling survival and regression
@@ -41,8 +42,8 @@ clean:
 	find ./data/output -type f -name "*.txt" -delete
 	find ./data/output -type f -name "*.png" -delete
 	find ./data/output -type f -name "*.pdf" -delete
-	find ./vignettes -type d -name "figure" -delete
-	find ./vignettes -type d -name "img" -delete
+	find ./vignettes -type d -name "figure" -exec rm -rv {} +
+	find ./vignettes -type d -name "img" -exec rm -rv {} +
 	find ./vignettes -type f -name "*.pdf" -delete
 	find ./vignettes -type f -name "*.Rnw" -delete
 	find ./vignettes -type f -name "*.log" -delete
