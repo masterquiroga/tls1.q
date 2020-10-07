@@ -12,7 +12,7 @@ To reproduce this research you need:
 - [R language](https://cloud.r-project.org/)
 - [GNU Make](https://www.gnu.org/software/make/)
 - Runtime dependencies for the R packages (see the [renv.lock](./renv.lock) file)
-- PQTLS experimental data (see the sample data in [data/sample/input](./data/sample/input))
+- PQTLS experimental data (see the sample data in [data/sample](./data/sample))
 
 ## Setup
 
