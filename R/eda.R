@@ -8,6 +8,7 @@ require("ggiraph")
 require("ggiraphExtra")
 require("plyr")
 require("crayon")
+require("tinytex")
 
 # Logarithmic scale to test for how speedy are clock times
 axis_labels <- list(
@@ -54,20 +55,20 @@ eda <- function(file, name, estimate_auth = FALSE) {
 
   data %>% diagnose_report(
     target = total, 
-    output_format = "pdf",
-    output_file = paste0(name,"_diagnosis.pdf"),
-    output_dir = "./vignettes")
+    output_format = "html",
+    output_file = paste0(name,"_diagnosis.html"),
+    output_dir = "./data/output")
 
   data %>% select(-type, -slow, -fast) %>% eda_report(
     target = total, 
-    output_format = "pdf",
-    output_file = paste0(name,"_eda.pdf"),
-    output_dir = "./vignettes")
+    output_format = "html",
+    output_file = paste0(name,"_eda.html"),
+    output_dir = "./data/output")
   data %>% select(-iteration, -type, -slow, -fast) %>% transformation_report(
     target = total,
-    output_format = "pdf",
-    output_file = paste0(name,"_transformation.pdf"),
-    output_dir = "./vignettes")
+    output_format = "html",
+    output_file = paste0(name,"_transformation.html"),
+    output_dir = "./data/output")
 
   # Transform the dataset ----
   data <- data %>% mutate(total_lvl = cut(exchange, 
@@ -134,17 +135,17 @@ eda <- function(file, name, estimate_auth = FALSE) {
 
 
 
-eda("./data/input/new/pq/x86/No-Dilitium-r2", "pq_x86_no_auth", TRUE)
-eda("./data/input/new/pq/x86/Single-Dilitium-r2", "pq_x86_single_auth", FALSE)
-eda("./data/input/new/pq/x86/Double-Dilitium-r2", "pq_x86_double_auth", FALSE)
-eda("./data/input/new/pq/arm/No-Dilitium", "pq_arm_no_auth", TRUE)
-eda("./data/input/new/pq/arm/Single-Dilitium", "pq_arm_single_auth", FALSE)
-eda("./data/input/new/pq/arm/Double-Dilitium", "pq_arm_double_auth", FALSE)
+eda("./data/input/pq/x86/no.csv", "pq_x86_no_auth", TRUE)
+eda("./data/input/pq/x86/single.csv", "pq_x86_single_auth", FALSE)
+eda("./data/input/pq/x86/double.csv", "pq_x86_double_auth", FALSE)
+eda("./data/input/pq/arm/no.csv", "pq_arm_no_auth", TRUE)
+eda("./data/input/pq/arm/single.csv", "pq_arm_single_auth", FALSE)
+eda("./data/input/pq/arm/double.csv", "pq_arm_double_auth", FALSE)
 
 
-eda("./data/input/new/classic/x86/Classic-No-Dilitium.bin", "classic_x86_no_auth", TRUE)
-eda("./data/input/new/classic/x86/Classic-Single-Dilitium.bin", "classic_x86_single_auth", FALSE)
-eda("./data/input/new/classic/x86/Classic-Double-Dilitium.bin", "classic_x86_double_auth", FALSE)
-eda("./data/input/new/classic/arm/Classic-No-Dilitium-Raspberry", "classic_arm_no_auth", TRUE)
-eda("./data/input/new/classic/arm/Classic-Single-Dilitium-Raspberry", "classic_arm_single_auth", FALSE)
-eda("./data/input/new/classic/arm/Classic-Double-Dilitium-Raspberry", "classic_arm_double_auth", FALSE)
+eda("./data/input/classic/x86/no.csv", "classic_x86_no_auth", TRUE)
+eda("./data/input/classic/x86/single.csv", "classic_x86_single_auth", FALSE)
+eda("./data/input/classic/x86/double.csv", "classic_x86_double_auth", FALSE)
+eda("./data/input/classic/arm/no.csv", "classic_arm_no_auth", TRUE)
+eda("./data/input/classic/arm/single.csv", "classic_arm_single_auth", FALSE)
+eda("./data/input/classic/arm/double.csv", "classic_arm_double_auth", FALSE)
