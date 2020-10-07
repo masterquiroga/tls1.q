@@ -4,14 +4,15 @@
 
 This repository allows a fellow scientist to reproduce research for the comparison of post-quantum vs classical TLS protocols, with an experimental design that takes architecture and signature schemes into account.
 
-The repository file is loosely based on the [cookiecutter data science template](https://drivendata.github.io/cookiecutter-data-science/#directory-structure) adapted to R.
+The repository structure is loosely inspired by the [cookiecutter data science template](https://drivendata.github.io/cookiecutter-data-science/#directory-structure), and adapted to R.
 
 ## Requirements
 
 To reproduce this research you need:
 - [R language](https://cloud.r-project.org/)
 - [GNU Make](https://www.gnu.org/software/make/)
-- PQTLS experimental data (see the sample layout in `data/sample/input`)
+- Runtime dependencies for the R packages (see the [renv.lock](./renv.lock) file)
+- PQTLS experimental data (see the sample data in [data/sample/input](./data/sample/input))
 
 ## Setup
 
@@ -37,7 +38,7 @@ The experimental data must be CSVs with 4 columns, each measuring clock times fo
 - The last one `total` indicates the total clock cycles that were obtained when the complete execution of the TLS protocol took place.
 See more in the section 3.2 Experimental Design of the article.
 
-Finally according to the architecture used and signature scheme, your file layout must comply to the following:
+Finally according to the architecture used and signature scheme, your file layout must comply to the `data/input/[protocol]/[arch]/[scheme].csv` layout as follows:
 ![PQTLS experiments layout](./assets/img/experiments.png)
 
 Then you can prepare your dataset from individual experiments:
