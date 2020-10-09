@@ -31,13 +31,16 @@ ggcorrplot(
   #method = "circle",
   p.mat = assocs$p.value, 
   lab = TRUE,
+  lab_size = 3.75,
+  tl.cex = 16,
   insig = "blank", 
-  ggtheme=ggthemes::theme_tufte(base_size = 12)) %>% ggsave(
+  ggtheme=ggthemes::theme_tufte(base_size = 16)) %>% ggsave(
   filename = "./data/output/pqtls_assoc.pdf", plot = .,
   width=600,
   height=600,
   units="mm",
   scale=1/4,
+  pointsize=16,
   dpi=600,
 )
 #dev.off()
@@ -99,7 +102,7 @@ ggcorrplot(
 #   greybox::spread(histograms = TRUE)
 
 
-sink("./data/output/pqtls_detailed-summary.txt")
+sink("./data/output/pqtls_detailed-summary.tex")
 dat %>% group_by(protocol, arch, scheme) %>%
   summarize(
     min = min(total),
@@ -112,7 +115,7 @@ dat %>% group_by(protocol, arch, scheme) %>%
   caption = "Detailed Summary of Clock Times: The clock times are grouped by protocol tested, execution architecture and authentication (handshake) scheme.")
 sink()
 
-sink("./data/output/pqtls_summary.txt")
+sink("./data/output/pqtls_summary.tex")
 dat %>% group_by(protocol) %>%
   summarize(
     min = min(total),
