@@ -87,9 +87,13 @@ fit_hermite <- function(data) {
 }
 #dat_params <- dat$total %>% fit_hermite
 
-dat_survdiff <- survdiff(Surv(total, status) ~ protocol, data = dat, rho = 1)  
+sink("./data/output/pqtls_survdiff.out.txt")
+(dat_survdiff <- survdiff(Surv(total, status) ~ protocol, data = dat, rho = 1))
+sink()
 
-dat_survfit <- survfit(Surv(total, status) ~ protocol, data = dat) 
+sink("./data/output/pqtls_survfit.out.txt")
+(dat_survfit <- survfit(Surv(total, status) ~ protocol, data = dat))
+sink()
 #pdf("./data/output/pqtls_survfit.pdf", 800, 400, 24)
 p <- dat_survfit %>% ggsurvplot(data = dat,
     conf.int = TRUE,
@@ -184,7 +188,9 @@ p <- NULL
 
 #srv <- survreg(Surv(total, status) ~ protocol*arch*scheme, data = dat, dist = "weibull")
 
-dat_survreg <- flexsurvreg(Surv(total, status) ~ protocol, data = dat, dist = "weibull")
+sink("./data/output/pqtls_survreg.out.txt")
+(dat_survreg <- flexsurvreg(Surv(total, status) ~ protocol, data = dat, dist = "weibull"))
+sink()
 p <- dat_survreg %>% ggflexsurvplot(data = dat, 
   fun = "survival",
   conf.int = TRUE,
@@ -227,25 +233,26 @@ p$table %>% ggsave(
 
 
 
-
-dat_model_mixef <-  lmer(
+sink("./data/output/pqtls_model_mixef.out.txt")
+(dat_model_mixef <-  lmer(
   total ~ iteration * protocol + 
     (iteration | arch:scheme) + 
     (iteration * protocol || arch), 
   data = dat
-)
+))
+cat("MAPE: ", dat_model_mixef %>% mape(dat_test))
+sink()
 
-
+sink("./data/output/pqtls_model.out.txt")
 (dat_model <- glm(
   total ~ protocol*arch*scheme,
   data = dat
 ))
-(dat_model %>% mape(dat_test))
+cat("MAPE: ", dat_model %>% mape(dat_test))
+sink()
 
-(dat_model_mixef %>% mape(dat_test))
 
-
-sink("./data/output/pqtls_model.txt")
+sink("./data/output/pqtls_model.tex")
 dat_model %>% stargazer(model.names = TRUE) 
 sink()
 
@@ -291,7 +298,7 @@ p %>% ggsave(
 # ANOVA
 # -----
 
-sink("./data/output/pqtls_anova.txt")
+sink("./data/output/pqtls_anova.tex")
 (dat_anova <- dat_model %>% Anova(
   type = 3, 
   white.adjust = "hc4",
