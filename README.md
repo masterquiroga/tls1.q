@@ -1,4 +1,4 @@
-# Reproducible research for the "Performance for the Post-quantum Schemes in the Transport Layer Security Protocol" article
+# Reproducible research for the "Performance of the Post-quantum Schemes in the Transport Layer Security Protocol" article
 
 ![PQTLS article](./assets/img/article.png)
 
@@ -56,7 +56,7 @@ And finally reproduce the research models:
 ```
 make models
 ```
-[![asciicast](https://asciinema.org/a/mX9hHKYP8YEL571L78unNxuTr.svg)](https://asciinema.org/a/mX9hHKYP8YEL571L78unNxuTr)
+[![asciicast](https://asciinema.org/a/0Cr3FqPU46zkE5ThtaAdrkBHW.svg)](https://asciinema.org/a/0Cr3FqPU46zkE5ThtaAdrkBHW)
 
 Your outputs will be in the `data/output` directory.
 
